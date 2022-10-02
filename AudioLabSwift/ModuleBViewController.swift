@@ -13,7 +13,7 @@ import Metal
 
 
 
-class ViewController: UIViewController {
+class ModuleBViewController: UIViewController {
 
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 1024*4
@@ -22,9 +22,10 @@ class ViewController: UIViewController {
     // setup audio model
     let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
     lazy var graph:MetalGraph? = {
-        return MetalGraph(userView: self.view)
+        return MetalGraph(userView: self.MainView)
     }()
     
+    @IBOutlet weak var MainView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
