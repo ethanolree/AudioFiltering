@@ -17,6 +17,17 @@ class AudioModel {
     // the user can access these arrays at any time and plot them if they like
     var timeData:[Float]
     var fftData:[Float]
+    var movementData:[Float]
+    var startingIndex = 0
+    var endingIndex = 0
+    var increment = 50
+    var sinWaveIndex = 0
+    var prevRightAverage:Float
+    var prevLeftAverage:Float
+    var messageToReturn:String
+    var movedLeft = "Gesturing Toward"
+    var movedRight = "Gesturing Away"
+    var movedNone = "Not Gesturing"
     
     // MARK: Public Methods
     init(buffer_size:Int) {
@@ -24,8 +35,23 @@ class AudioModel {
         // anything not lazily instatntiated should be allocated here
         timeData = Array.init(repeating: 0.0, count: BUFFER_SIZE)
         fftData = Array.init(repeating: 0.0, count: BUFFER_SIZE/2)
+        movementData = Array.init(repeating: 0.0, count: 102)
+        // magnitude of FFT split into 20
+        increment = Int(BUFFER_SIZE)/2/20
+        endingIndex = increment
+        prevRightAverage = 0
+        prevLeftAverage = 0
+        messageToReturn = movedNone
     }
-    
+    func startProcessingSinewaveForPlayback(withFreq:Float=330.0){
+        sineFrequency = withFreq
+        // Two examples are given that use either objective c or that use swift
+        //   the swift code for loop is slightly slower thatn doing this in c,
+        //   but the implementations are very similar
+        if let manager = self.audioManager{
+            manager.setOutputBlockToPlaySineWave(sineFrequency)
+        }
+    }
     // public function for starting processing of microphone data
     func startMicrophoneProcessing(withFps:Double){
         // setup the microphone to copy to circualr buffer
@@ -66,6 +92,14 @@ class AudioModel {
                                    andBufferSize: Int64(BUFFER_SIZE))
     }()
     
+    var sineFrequency:Float = 0.0 { // frequency in Hz (changeable by user)
+        didSet{
+            
+            if let manager = self.audioManager {
+                manager.sineFrequency = sineFrequency
+            }
+        }
+    }
     
     //==========================================
     // MARK: Private Methods
@@ -91,6 +125,47 @@ class AudioModel {
             
         }
     }
+    
+    @objc
+    func checkForMovement(currFreq:Int) -> String{
+        messageToReturn = movedNone
+        if inputBuffer != nil {
+            // copy time data to swift array
+            self.inputBuffer!.fetchFreshData(&timeData,
+                                             withNumSamples: Int64(BUFFER_SIZE))
+            
+            // now take FFT
+            fftHelper!.performForwardFFT(withData: &timeData,
+                                         andCopydBMagnitudeToBuffer: &fftData)
+            
+            let increment = Int(BUFFER_SIZE)/2/20
+            var startingIndex = 0
+            var endingIndex = increment
+            endingIndex = startingIndex + increment
+//            for index in movementData.indices {
+//                movementData[index] = Array(fftData[startingIndex...endingIndex]).max()!
+//                startingIndex = endingIndex
+//                endingIndex = endingIndex + increment
+//                if currFreq > startingIndex{
+//                    sinWaveIndex = index}
+//            }
+
+//            if movementData[sinWaveIndex-1] > prevRightAverage{
+//                messageToReturn = movedLeft
+//            }
+//
+//            if movementData[sinWaveIndex+1] < prevRightAverage{
+//                messageToReturn = movedRight
+//            }
+//            
+//            //updateAverages
+//            prevRightAverage = movementData[sinWaveIndex+1]
+//            prevLeftAverage = movementData[sinWaveIndex-1]
+            
+        }
+        return messageToReturn
+    }
+    
     
     //==========================================
     // MARK: Audiocard Callbacks
