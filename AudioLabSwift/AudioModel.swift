@@ -18,12 +18,15 @@ class AudioModel {
     var timeData:[Float]
     var fftData:[Float]
     
+    var audioAnalyzerModel:AudioAnalyzerModel
+    
     // MARK: Public Methods
     init(buffer_size:Int) {
         BUFFER_SIZE = buffer_size
         // anything not lazily instatntiated should be allocated here
         timeData = Array.init(repeating: 0.0, count: BUFFER_SIZE)
         fftData = Array.init(repeating: 0.0, count: BUFFER_SIZE/2)
+        audioAnalyzerModel = AudioAnalyzerModel()
     }
     
     // public function for starting processing of microphone data
@@ -88,6 +91,8 @@ class AudioModel {
             //   timeData: the raw audio samples
             //   fftData:  the FFT of those same samples
             // the user can now use these variables however they like
+            
+            audioAnalyzerModel.calcMaxFreq(data: fftData)
             
         }
     }

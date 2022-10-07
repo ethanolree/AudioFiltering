@@ -14,9 +14,10 @@ import Metal
 
 
 class ModuleAViewController: UIViewController {
+    
 
     struct AudioConstants{
-        static let AUDIO_BUFFER_SIZE = 1024*4
+        static let AUDIO_BUFFER_SIZE = 4096*16
     }
     
     // setup audio model
