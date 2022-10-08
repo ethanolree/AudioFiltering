@@ -33,6 +33,8 @@ class AudioModel {
     var movedNone = "Not Gesturing"
     var sinFreqChanged = false
     
+    var audioAnalyzerModel:AudioAnalyzerModel
+    
     // MARK: Public Methods
     init(buffer_size:Int) {
         BUFFER_SIZE = buffer_size
@@ -46,6 +48,7 @@ class AudioModel {
         prevRightAverage = 0
         prevLeftAverage = 0
         messageToReturn = movedNone
+        audioAnalyzerModel = AudioAnalyzerModel()
     }
     func startProcessingSinewaveForPlayback(withFreq:Float=330.0){
         sineFrequency = withFreq
@@ -56,6 +59,7 @@ class AudioModel {
             manager.setOutputBlockToPlaySineWave(sineFrequency)
         }
     }
+    
     // public function for starting processing of microphone data
     func startMicrophoneProcessing(withFps:Double){
         // setup the microphone to copy to circualr buffer
@@ -127,6 +131,8 @@ class AudioModel {
             //   timeData: the raw audio samples
             //   fftData:  the FFT of those same samples
             // the user can now use these variables however they like
+            
+            audioAnalyzerModel.calcMaxFreq(data: fftData)
             
         }
     }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		78187DBB28E90FB70061E663 /* ModuleBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78187DBA28E90FB70061E663 /* ModuleBViewController.swift */; };
+		78187DBD28EA363F0061E663 /* AudioAnalyzerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78187DBC28EA363F0061E663 /* AudioAnalyzerModel.swift */; };
 		B65B5A5A24F4409F00E74E73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B5A5924F4409F00E74E73 /* AppDelegate.swift */; };
 		B65B5A5C24F4409F00E74E73 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B5A5B24F4409F00E74E73 /* SceneDelegate.swift */; };
 		B65B5A5E24F4409F00E74E73 /* ModuleAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B5A5D24F4409F00E74E73 /* ModuleAViewController.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		78187DBA28E90FB70061E663 /* ModuleBViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleBViewController.swift; sourceTree = "<group>"; };
+		78187DBC28EA363F0061E663 /* AudioAnalyzerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnalyzerModel.swift; sourceTree = "<group>"; };
 		B65B5A5624F4409F00E74E73 /* AudioLabSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioLabSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B65B5A5924F4409F00E74E73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B65B5A5B24F4409F00E74E73 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				B65B5A6724F440A100E74E73 /* Info.plist */,
 				B65B5A6D24F440D500E74E73 /* AudioLabSwift-Bridging-Header.h */,
 				B65B5A7424F4440300E74E73 /* satisfaction.mp3 */,
+				78187DBC28EA363F0061E663 /* AudioAnalyzerModel.swift */,
 			);
 			path = AudioLabSwift;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 				B65B5A8124F4AAB800E74E73 /* MetalGraph.swift in Sources */,
 				B65B5A5E24F4409F00E74E73 /* ModuleAViewController.swift in Sources */,
 				B65B5A5A24F4409F00E74E73 /* AppDelegate.swift in Sources */,
+				78187DBD28EA363F0061E663 /* AudioAnalyzerModel.swift in Sources */,
 				B65B5A7F24F4798B00E74E73 /* Shaders.metal in Sources */,
 				B65B5A7D24F458D700E74E73 /* FFTHelper.m in Sources */,
 				B65B5A5C24F4409F00E74E73 /* SceneDelegate.swift in Sources */,
