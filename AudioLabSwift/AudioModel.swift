@@ -27,8 +27,10 @@ class AudioModel {
     var sinWaveIndex = 0
     var prevRightAverage:Float
     var prevLeftAverage:Float
+    var curRightAverage:Float
+    var curLeftAverage:Float
     var messageToReturn:String
-    var movedLeft = "Gesturing Toward"
+    var movedLeft = "Gesturing To"
     var movedRight = "Gesturing Away"
     var movedNone = "Not Gesturing"
     var sinFreqChanged = false
@@ -47,6 +49,8 @@ class AudioModel {
         endingIndex = increment
         prevRightAverage = 0
         prevLeftAverage = 0
+        curRightAverage = 0
+        curLeftAverage = 0
         messageToReturn = movedNone
         audioAnalyzerModel = AudioAnalyzerModel()
     }
@@ -83,6 +87,12 @@ class AudioModel {
         }
     }
     
+    // Stop the audio manager
+    func stop(){
+        if let manager = self.audioManager{
+            manager.pause()
+        }
+    }
     
     //==========================================
     // MARK: Private Properties
@@ -148,39 +158,44 @@ class AudioModel {
             // now take FFT
             fftHelper!.performForwardFFT(withData: &timeData,
                                          andCopydBMagnitudeToBuffer: &fftData)
-            
+            //get fft index of current frequency
             let freqIndexIncrement = 44100/(BUFFER_SIZE)
             let curSinFreqIndex = Int(currFreq/freqIndexIncrement)
             
+            // set current left and right averages
             messageToReturn = movedNone
-            //updateAverages
+            curRightAverage = vDSP.mean(fftData[curSinFreqIndex+5...curSinFreqIndex+10])
+            curLeftAverage = vDSP.mean(fftData[curSinFreqIndex-10...curSinFreqIndex-5])
+            
+            //update Averages if freq updated
             if sinFreqChanged {
-                prevRightAverage = vDSP.mean(fftData[curSinFreqIndex+1...curSinFreqIndex+4])
+                prevRightAverage = curRightAverage
                 
-                prevLeftAverage = vDSP.mean(fftData[curSinFreqIndex-4...curSinFreqIndex-1])
+                prevLeftAverage = curLeftAverage
                 sinFreqChanged = false
             }
             
             print(" ")
             print(fftData[curSinFreqIndex]/fftData[curSinFreqIndex])
             print("right previous: " + String(prevRightAverage))
-            print("right current: " + String(vDSP.mean(fftData[curSinFreqIndex+1...curSinFreqIndex+4])))
+            print("right current: " + String(curRightAverage))
             print("left previous: " + String(prevLeftAverage))
-            print("left current: " + String(vDSP.mean(fftData[curSinFreqIndex-4...curSinFreqIndex-1])))
+            print("left current: " + String(curLeftAverage))
 
-            if vDSP.mean(fftData[curSinFreqIndex+1...curSinFreqIndex+4]) > prevRightAverage + 2{
+            // check averages left and right of the expected freqency to detect movement
+            if curRightAverage > prevRightAverage{
                 print("MOVING CLOSER")
                 messageToReturn = movedRight
             }
             
-            if vDSP.mean(fftData[curSinFreqIndex-4...curSinFreqIndex-1]) > prevLeftAverage + 2{
+            if curLeftAverage > prevLeftAverage{
                 print("MOVING AWAY")
                 messageToReturn = movedLeft
             }
             
-            prevRightAverage = vDSP.mean(fftData[curSinFreqIndex+1...curSinFreqIndex+4])
-                
-            prevLeftAverage = vDSP.mean(fftData[curSinFreqIndex-4...curSinFreqIndex-1])
+            //update previous average
+            prevRightAverage = curRightAverage
+            prevLeftAverage = curLeftAverage
             
             
         }
