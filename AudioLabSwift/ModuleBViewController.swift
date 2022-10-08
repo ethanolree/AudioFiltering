@@ -62,6 +62,11 @@ class ModuleBViewController: UIViewController {
             selector: #selector(self.updateGraph),
             userInfo: nil,
             repeats: true)
+        
+        Timer.scheduledTimer(timeInterval: 0.5, target: self,
+            selector: #selector(self.checkForMovement),
+            userInfo: nil,
+            repeats: true)
        
     }
     
@@ -74,18 +79,13 @@ class ModuleBViewController: UIViewController {
         )
         
         
-        movementIndLabel.text = self.audio.checkForMovement(currFreq: Int(freqSlider.value))
         
         
     }
-    
-    func updatedFreq(){
-        //find average freqs in range
+    @objc
+    func checkForMovement(){
         
-        //curve moved left, moved closer
-        
-        //curve moved right, moved away
-        //stayed still
+        movementIndLabel.text = self.audio.checkForMovement(currFreq: Int(freqSlider.value))
     }
     
     @IBAction func sliderFunction(_ sender: UISlider) {
