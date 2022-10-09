@@ -9,16 +9,14 @@
 import UIKit
 import Metal
 
-
-
-
-
 class ModuleAViewController: UIViewController {
     
 
     struct AudioConstants{
         static let AUDIO_BUFFER_SIZE = 4096*16
     }
+    
+    let audioAnalyzer = AudioAnalyzerModel();
     
     // setup audio model
     let audio = AudioModel(buffer_size: AudioConstants.AUDIO_BUFFER_SIZE)
@@ -27,6 +25,7 @@ class ModuleAViewController: UIViewController {
     }()
     
     @IBOutlet weak var MainView: UIView!
+    @IBOutlet weak var MaxLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +36,7 @@ class ModuleAViewController: UIViewController {
             graph.addGraph(withName: "fft",
                             shouldNormalizeForFFT: true,
                             numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE/2)
-            
-            graph.addGraph(withName: "time",
-                numPointsInGraph: AudioConstants.AUDIO_BUFFER_SIZE)
-            
+                
             graph.makeGrids() // add grids to graph
         }
         
@@ -65,15 +61,14 @@ class ModuleAViewController: UIViewController {
             forKey: "fft"
         )
         
-        self.graph?.updateGraph(
-            data: self.audio.timeData,
-            forKey: "time"
-        )
-        
-        
-        
+        MaxLabel.text = "Maximum Frequencies: \(audio.audioAnalyzerModel.maxFreq)"
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated);
+        
+        audio.stop()
+    }
     
 
 }

@@ -88,24 +88,33 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Yg-DK-pQv">
-                                <rect key="frame" x="10" y="173" width="394" height="679"/>
+                                <rect key="frame" x="10" y="246" width="394" height="606"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maximum Frequencies:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ob9-jS-chJ">
+                                <rect key="frame" x="104" y="189" width="207" height="38"/>
+                                <fontDescription key="fontDescription" name="KhmerSangamMN" family="Khmer Sangam MN" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="BrM-GY-RSN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="0Qt-4P-yqx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6Yg-DK-pQv" secondAttribute="bottom" constant="10" id="2aG-so-avu"/>
-                            <constraint firstItem="6Yg-DK-pQv" firstAttribute="top" secondItem="BrM-GY-RSN" secondAttribute="bottom" constant="20" id="MI7-2y-IA5"/>
+                            <constraint firstItem="ob9-jS-chJ" firstAttribute="top" secondItem="BrM-GY-RSN" secondAttribute="bottom" constant="36" id="QKp-di-jF7"/>
+                            <constraint firstItem="6Yg-DK-pQv" firstAttribute="top" secondItem="ob9-jS-chJ" secondAttribute="bottom" constant="19" id="Qxb-Wq-apl"/>
                             <constraint firstItem="6Yg-DK-pQv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="YIc-pb-olD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Yg-DK-pQv" secondAttribute="trailing" constant="10" id="adm-mO-syw"/>
-                            <constraint firstItem="BrM-GY-RSN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hG6-pc-I25"/>
+                            <constraint firstItem="ob9-jS-chJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="uDO-dE-6bw"/>
                             <constraint firstItem="BrM-GY-RSN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="yNm-zV-rKS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8Sl-wr-fv8"/>
                     <connections>
                         <outlet property="MainView" destination="6Yg-DK-pQv" id="vAS-7e-5TK"/>
+                        <outlet property="MaxLabel" destination="ob9-jS-chJ" id="Sq8-1e-BTn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
