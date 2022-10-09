@@ -88,6 +88,12 @@ class ModuleBViewController: UIViewController {
         movementIndLabel.text = self.audio.checkForMovement(currFreq: Int(freqSlider.value))
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated);
+        
+        audio.stop()
+    }
+    
     @IBAction func sliderFunction(_ sender: UISlider) {
         curFrequencyLabel.text = Int(sender.value).description
         self.audio.sineFrequency = sender.value
